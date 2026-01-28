@@ -1,0 +1,85 @@
+# registration
+###
+POST http://127.0.0.1:8000/api/auth/register/
+Content-Type: application/json
+
+{
+    "username": "Mark",
+    "email": "Mark@mail.ru",
+    "password": "NewYear2026"
+}
+
+###
+
+POST http://127.0.0.1:8000/api/auth/login/
+Content-Type: application/json
+
+{
+    "username": "john_doe",
+    "password": "SecurePass123"
+}
+
+###
+POST http://127.0.0.1:8000/api/auth/login/
+Content-Type: application/json
+
+{
+    "username": "Mark",
+    "password": "NewYear2026"
+}
+
+###
+GET http://127.0.0.1:8000/api/publications/
+
+###
+PUT http://127.0.0.1:8000/api/publications/7/
+Content-Type: application/json
+Authorization: Token 945085ea20554beb16523c49c9102cfee7cdc623
+
+{
+    "text": "Test First post"
+}
+
+###
+PUT http://127.0.0.1:8000/api/publications/7/
+Content-Type: application/json
+Authorization: Token d8eba4e97dd89f2afb5e5d07d80a67e10919e266
+
+{
+    "text": "Test First post"
+}
+
+###
+DELETE http://127.0.0.1:8000/api/publications/7/
+Authorization: Token d8eba4e97dd89f2afb5e5d07d80a67e10919e266
+
+###
+POST http://127.0.0.1:8000/api/publications/8/like/
+
+###
+POST http://127.0.0.1:8000/api/publications/8/like/
+Authorization: Token d8eba4e97dd89f2afb5e5d07d80a67e10919e266
+
+###
+GET http://127.0.0.1:8000/api/publications/8/comments/
+Authorization: Token 945085ea20554beb16523c49c9102cfee7cdc623
+
+###
+POST http://127.0.0.1:8000/api/publications/8/comments/
+Content-Type: application/json
+Authorization: Token d8eba4e97dd89f2afb5e5d07d80a67e10919e266
+
+{
+    "id_user": 2,
+    "text": "First comment from the creator "
+}
+
+###
+POST http://127.0.0.1:8000/api/publications/8/comments/
+Content-Type: application/json
+Authorization: Token 945085ea20554beb16523c49c9102cfee7cdc623
+
+{
+    "id_user": 3,
+    "text": "Second comment from the MArk "
+}
