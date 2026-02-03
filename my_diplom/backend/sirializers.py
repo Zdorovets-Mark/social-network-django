@@ -65,7 +65,7 @@ class PublicationSerializer(serializers.ModelSerializer):
 
 class PublicationCreateSerializer(serializers.ModelSerializer):
     photos = serializers.ListField(
-        child=serializers.ImageField(),
+        child=serializers.FileField(),
         write_only=True,
         required=True,
         min_length=1,
