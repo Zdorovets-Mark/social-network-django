@@ -10,56 +10,67 @@ User = get_user_model()
 
 class Publication(models.Model):
     class AccessLevel(models.TextChoices):
-        PUBLIC = 'public', 'Public'
-        FRIENDS = 'friends', 'Friends Only'
-        PRIVATE = 'private', 'Private'
+        PUBLIC = "public", "Public"
+        FRIENDS = "friends", "Friends Only"
+        PRIVATE = "private", "Private"
 
-    id_user = models.ForeignKey(User, related_name='publications', on_delete=models.CASCADE)
+    id_user = models.ForeignKey(
+        User, related_name="publications", on_delete=models.CASCADE
+    )
     text = models.TextField(blank=True, null=True)
     accessibility = models.CharField(
-        max_length=10,
-        choices=AccessLevel.choices,
-        default=AccessLevel.PUBLIC
+        max_length=10, choices=AccessLevel.choices, default=AccessLevel.PUBLIC
     )
     time_created = models.DateTimeField(auto_now_add=True)
 
     # Sort publication from new to old
     class Meta:
-        ordering = ['-time_created']
+        ordering = ["-time_created"]
+
 
 class Comment(models.Model):
-    id_user = models.ForeignKey(User, related_name='comments', on_delete=models.CASCADE)
-    id_publication = models.ForeignKey(Publication, related_name='comments', on_delete=models.CASCADE)
+    id_user = models.ForeignKey(
+        User, related_name="comments", on_delete=models.CASCADE
+    )
+    id_publication = models.ForeignKey(
+        Publication, related_name="comments", on_delete=models.CASCADE
+    )
     text = models.TextField(blank=True, null=True)
     time_created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ['time_created']
+        ordering = ["time_created"]
 
 class Like(models.Model):
-    id_user = models.ForeignKey(User, related_name = 'likes', on_delete=models.CASCADE)
-    id_publication = models.ForeignKey(Publication, related_name='likes', on_delete=models.CASCADE)
+    id_user = models.ForeignKey(
+        User, related_name="likes", on_delete=models.CASCADE
+    )
+    id_publication = models.ForeignKey(
+        Publication, related_name="likes", on_delete=models.CASCADE
+    )
     time_created = models.DateTimeField(auto_now_add=True)
 
     # one user - one like
     class Meta:
-        unique_together = ('id_user', 'id_publication')
+        unique_together = ("id_user", "id_publication")
 
 class Photo(models.Model):
-    id_user = models.ForeignKey(User, related_name='photos', on_delete=models.CASCADE)
+    id_user = models.ForeignKey(
+        User, related_name="photos", on_delete=models.CASCADE
+    )
     id_publication = models.ForeignKey(
         Publication,
         on_delete=models.CASCADE,
-        related_name='photos',
+        related_name="photos",
         blank=True,
-        null=True
+        null=True,
     )
-    image = models.ImageField(upload_to='photos/')
+    image = models.ImageField(upload_to="photos/")
     caption = models.CharField(max_length=255, blank=True, null=True)
     time_created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ['-time_created']
+        ordering = ["-time_created"]
 
 
 @receiver(post_delete, sender=Photo)

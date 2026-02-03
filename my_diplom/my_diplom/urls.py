@@ -14,38 +14,35 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.conf import settings
 from django.conf.urls.static import static
-
-from django.urls import path
 from django.contrib import admin
+from django.urls import path
 
-from backend.views import UserRegistrationView, PublicationViewSet, CommentViewSet, UserLoginView, home_view
+from backend.views import (CommentViewSet, PublicationViewSet, UserLoginView,
+                           UserRegistrationView, home_view)
 
 urlpatterns = [
-    path('', home_view, name='home'),
-    path('admin/', admin.site.urls),
-    path('api/auth/register/', UserRegistrationView.as_view(), name='register'),
-    path('api/auth/login/', UserLoginView.as_view(), name='login'),
-
-    path('api/publications/', PublicationViewSet.as_view({
-        'get': 'list',
-        'post': 'create'
-        })),
-
-    path('api/publications/<int:pk>/', PublicationViewSet.as_view({
-        'get': 'retrieve',
-        'put': 'update',
-        'delete': 'destroy'
-    })),
-
-    path('api/publications/<int:pk>/like/', PublicationViewSet.as_view({
-        'post': 'like'
-    })),
-
-    path('api/publications/<int:publication_pk>/comments/', CommentViewSet.as_view({
-        'get': 'list',
-        'post': 'create'
-    })),
-
+    path("", home_view, name="home"),
+    path("admin/", admin.site.urls),
+    path("api/auth/register/", UserRegistrationView.as_view(), name="register"),
+    path("api/auth/login/", UserLoginView.as_view(), name="login"),
+    path(
+        "api/publications/",
+        PublicationViewSet.as_view({"get": "list", "post": "create"}),
+    ),
+    path(
+        "api/publications/<int:pk>/",
+        PublicationViewSet.as_view(
+            {"get": "retrieve", "put": "update", "delete": "destroy"}
+        ),
+    ),
+    path(
+        "api/publications/<int:pk>/like/", PublicationViewSet.as_view({"post": "like"})
+    ),
+    path(
+        "api/publications/<int:publication_pk>/comments/",
+        CommentViewSet.as_view({"get": "list", "post": "create"}),
+    ),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
