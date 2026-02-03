@@ -50,7 +50,7 @@ Authorization: Token d8eba4e97dd89f2afb5e5d07d80a67e10919e266
 }
 
 ###
-DELETE http://127.0.0.1:8000/api/publications/7/
+DELETE http://127.0.0.1:8000/api/publications/9/
 Authorization: Token d8eba4e97dd89f2afb5e5d07d80a67e10919e266
 
 ###

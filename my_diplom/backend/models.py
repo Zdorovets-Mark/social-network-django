@@ -1,6 +1,9 @@
+import os
+
 from django.contrib.auth import get_user_model
 from django.db import models
-
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
 
 User = get_user_model()
 # Create your models here.
@@ -57,3 +60,10 @@ class Photo(models.Model):
 
     class Meta:
         ordering = ['-time_created']
+
+
+@receiver(post_delete, sender=Photo)
+def delete_photo_file(sender, instance, **kwargs):
+    if instance.image:
+        if os.path.isfile(instance.image.path):
+            os.remove(instance.image.path)

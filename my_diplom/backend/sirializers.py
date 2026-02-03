@@ -1,3 +1,5 @@
+import os
+
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
@@ -26,10 +28,11 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         return user
 
 class CommentSerializer(serializers.ModelSerializer):
+    author = serializers.ReadOnlyField(source='id_user.username')
 
     class Meta:
         model = Comment
-        fields = ("id_user", "text", "time_created")
+        fields = ("id_user", "author", "text", "time_created")
 
 class PhotoSerializer(serializers.ModelSerializer):
     class Meta:
@@ -51,14 +54,32 @@ class PublicationSerializer(serializers.ModelSerializer):
 
 class PublicationCreateSerializer(serializers.ModelSerializer):
     photos = serializers.ListField(
-        child=serializers.ImageField(),
-        write_only=True,
-        required=False
+        child = serializers.ImageField(),
+        write_only = True,
+        required = True,
+        min_length = 1,
+        max_length = 10
     )
 
     class Meta:
         model = Publication
         fields = ('text', 'photos')
+
+    def validate_photos(self, value):
+        for image in value:
+            if image.size > 5 * 1024 * 1024:
+                raise serializers.ValidationError(
+                    f"Файл {image.name} слишком большой. Максимальный размер: 5MB"
+                )
+
+            valid_extensions = ['.jpg', '.jpeg', '.png', '.gif']
+            extension = os.path.splitext(image.name)[1].lower()
+            if extension not in valid_extensions:
+                raise serializers.ValidationError(
+                    f"Неподдерживаемый формат файла {image.name}. "
+                    f"Поддерживаемые форматы: {', '.join(valid_extensions)}"
+                )
+        return value
 
     def create(self, validated_data):
         photos = validated_data.pop('photos', [])

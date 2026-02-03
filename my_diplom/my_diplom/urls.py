@@ -20,10 +20,10 @@ from django.conf.urls.static import static
 from django.urls import path
 from django.contrib import admin
 
-from backend.views import UserRegistrationView, PublicationViewSet, CommentViewSet, UserLoginView
-
+from backend.views import UserRegistrationView, PublicationViewSet, CommentViewSet, UserLoginView, home_view
 
 urlpatterns = [
+    path('', home_view, name='home'),
     path('admin/', admin.site.urls),
     path('api/auth/register/', UserRegistrationView.as_view(), name='register'),
     path('api/auth/login/', UserLoginView.as_view(), name='login'),

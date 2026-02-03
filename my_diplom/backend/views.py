@@ -14,6 +14,8 @@ from backend.permissions import IsOwnerOrReadOnly
 from backend.sirializers import UserRegistrationSerializer, PublicationCreateSerializer, PublicationSerializer, \
     CommentSerializer
 
+from django.shortcuts import render, reverse
+
 class UserRegistrationView(APIView):
     permission_classes = [AllowAny]
 
@@ -61,17 +63,21 @@ class PublicationViewSet(ModelViewSet):
     queryset = Publication.objects.all().prefetch_related('photos')
 
     def create(self, request, *args, **kwargs):
-        # Вызываю родительский create
-        response = super().create(request, *args, **kwargs)
+        create_serializer = PublicationCreateSerializer(
+            data=request.data,
+            context={'request': request}
+        )
+        create_serializer.is_valid(raise_exception=True)
+        publication = create_serializer.save()
 
-        response.data = {
-            "message": "Publication is create",
-            "publication": response.data,
-            'user_id': request.user.id,
-            'username': request.user.username
-        }
+        result_serializer = PublicationSerializer(publication)
 
-        return response
+        return Response(result_serializer.data, status=status.HTTP_201_CREATED)
+        # ИЛИ :
+        # return Response({
+        #     "message": "Публикация успешно создана",
+        #     "publication": result_serializer.data
+        # }, status=status.HTTP_201_CREATED)
 
     def get_serializer_class(self):
         if self.action == 'create':
@@ -110,4 +116,18 @@ class CommentViewSet(ModelViewSet):
     def perform_create(self, serializer):
         publication = get_object_or_404(Publication, pk=self.kwargs['publication_pk'])
         serializer.save(id_user=self.request.user, id_publication=publication)
+
+
+def home_view(request):
+    template_name = 'greeting.html'
+    pages = {
+        'Главная страница': reverse('home'),
+    }
+
+    # context и параметры render менять не нужно
+    # подбробнее о них мы поговорим на следующих лекциях
+    context = {
+        'pages': pages
+    }
+    return render(request, template_name, context)
 
