@@ -1,4 +1,4 @@
-# registration
+    # test registration
 ###
 POST http://127.0.0.1:8000/api/auth/register/
 Content-Type: application/json
@@ -9,16 +9,7 @@ Content-Type: application/json
     "password": "NewYear2026"
 }
 
-###
-
-POST http://127.0.0.1:8000/api/auth/login/
-Content-Type: application/json
-
-{
-    "username": "john_doe",
-    "password": "SecurePass123"
-}
-
+    # test login
 ###
 POST http://127.0.0.1:8000/api/auth/login/
 Content-Type: application/json
@@ -28,6 +19,7 @@ Content-Type: application/json
     "password": "NewYear2026"
 }
 
+    # test publications
 ###
 GET http://127.0.0.1:8000/api/publications/
 
@@ -82,4 +74,22 @@ Authorization: Token 945085ea20554beb16523c49c9102cfee7cdc623
 {
     "id_user": 3,
     "text": "Second comment from the MArk "
+}
+
+###
+PUT http://127.0.0.1:8000/api/publications/8/comments/1/
+Content-Type: application/json
+Authorization: Token d8eba4e97dd89f2afb5e5d07d80a67e10919e266
+
+{
+    "text": "First comment from the creator. ADD text "
+}
+
+###
+DELETE http://127.0.0.1:8000/api/publications/8/comments/3/
+Content-Type: application/json
+Authorization: Token d8eba4e97dd89f2afb5e5d07d80a67e10919e266
+
+{
+    "text": "First comment from the creator. ADD text "
 }

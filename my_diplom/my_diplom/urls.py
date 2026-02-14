@@ -21,11 +21,12 @@ from django.contrib import admin
 from django.urls import path
 
 from backend.views import (CommentViewSet, PublicationViewSet, UserLoginView,
-                           UserRegistrationView, home_view)
+                           UserRegistrationView, home_view, login_view,
+                           register_view)
 
 urlpatterns = [
-    path("", home_view, name="home"),
     path("admin/", admin.site.urls),
+
     path("api/auth/register/", UserRegistrationView.as_view(), name="register"),
     path("api/auth/login/", UserLoginView.as_view(), name="login"),
     path(
@@ -45,4 +46,17 @@ urlpatterns = [
         "api/publications/<int:publication_pk>/comments/",
         CommentViewSet.as_view({"get": "list", "post": "create"}),
     ),
+    path(
+    "api/publications/<int:publication_pk>/comments/<int:pk>/",
+        CommentViewSet.as_view({
+            "get": "retrieve",
+            "put": "update",
+            "patch": "partial_update",
+            "delete": "destroy"
+        }),
+    ),
+
+    path("", home_view, name="home"),
+    path("login/", login_view, name="login_page"),
+    path("register/", register_view, name="register_page"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
