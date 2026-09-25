@@ -278,9 +278,9 @@ black .
 
 ## Автор
 
-**TheHomelessHacker**
+**Zdorov**
 
-GitHub: [https://github.com/TheHomelessHacker](https://github.com/TheHomelessHacker)
+GitHub: (https://github.com/Zdorovets-Mark)
 
 ---
 
