@@ -185,7 +185,8 @@ requests.http
 ## Структура проекта
 
 ```
-my_diplom/
+social-network-django/
+├── my_diplom/
 ├── backend/
 │   ├── migrations/
 |   ├── templates/
@@ -293,5 +294,4 @@ GitHub: [@Zdorovets-Mark](https://github.com/Zdorovets-Mark)
 ---
 
 ## Лицензия
-
-MIT License. Проект создан в учебных целях.
+Проект создан в учебных целях.
