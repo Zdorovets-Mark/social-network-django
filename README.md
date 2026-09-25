@@ -1,4 +1,4 @@
-# Соцсеть на Django (Diplom)
+# Социальная сеть на Django + DRF
 
 Учебный backend-проект социальной сети на Django + Django REST Framework.
 Реализованы регистрация и авторизация по токену, публикации, комментарии,
@@ -276,14 +276,22 @@ black .
 
 ---
 
+## Планы развития
+
+- Покрыть API тестами (`pytest-django`).
+- Добавить JWT-аутентификацию (`djangorestframework-simplejwt`).
+- Контейнеризовать проект (Docker + Docker Compose).
+- Добавить пагинацию, кэширование и фильтрацию публикаций.
+- Настроить CI (GitHub Actions) для запуска линтеров и тестов.
+
 ## Автор
 
-**Zdorov**
+Mark Zdorovets
 
-GitHub: (https://github.com/Zdorovets-Mark)
+GitHub: [@Zdorovets-Mark](https://github.com/Zdorovets-Mark)
 
 ---
 
 ## Лицензия
 
-Лицензия не указана. Проект создан в учебных целях.
+MIT License. Проект создан в учебных целях.
