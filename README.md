@@ -185,9 +185,13 @@ requests.http
 ## Структура проекта
 
 ```
-Diplom/
+my_diplom/
 ├── backend/
 │   ├── migrations/
+|   ├── templates/
+|   │   ├── greeting.html
+|   │   ├── login.html
+|   │   └── register.html
 │   ├── admin.py
 │   ├── apps.py
 │   ├── models.py          # Publication, Comment, Like, Photo
@@ -200,10 +204,6 @@ Diplom/
 │   ├── urls.py
 │   ├── wsgi.py
 │   └── asgi.py
-├── templates/
-│   ├── greeting.html
-│   ├── login.html
-│   └── register.html
 ├── media/                 # Загруженные файлы (создаётся автоматически)
 ├── manage.py
 ├── requirements.txt
